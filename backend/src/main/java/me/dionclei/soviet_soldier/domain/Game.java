@@ -5,6 +5,7 @@ import me.dionclei.soviet_soldier.domain.enums.Card;
 import me.dionclei.soviet_soldier.domain.enums.GameEventType;
 import me.dionclei.soviet_soldier.dto.GameResponse;
 import me.dionclei.soviet_soldier.enums.GameStatus;
+import me.dionclei.soviet_soldier.exceptions.GameException;
 
 import java.util.*;
 
@@ -60,7 +61,7 @@ public class Game {
 
     private GameEvent handleRoundStart() {
         this.cards.clear();
-        this.cards = Arrays.asList(Card.values());
+        this.cards = new ArrayList<>(Arrays.asList(Card.values()));
         Collections.shuffle(this.cards);
         this.round = 3;
 
@@ -70,8 +71,9 @@ public class Game {
         for (Player p : this.players) {
             p.removeCards();
             for (int i = 0; i < 3; i++) {
-                p.addCard(this.cards.get(0));
-                this.cards.remove(0);
+                Card card = this.cards.get(0);
+                p.addCard(card);
+                this.cards.remove(card);
             }
         }
 
@@ -96,7 +98,7 @@ public class Game {
     }
 
     private GameEvent handleRoundEnd() {
-        var cards = this.playedCards.keySet().stream().toList();
+        var cards = new ArrayList<>(this.playedCards.keySet().stream().toList());
         Collections.sort(cards, Comparator.comparingInt(Card::getPower));
         if (cards.get(0).getPower() == cards.get(1).getPower()) {
             this.currentPlayerIndex = this.players.size() - 1;
@@ -164,12 +166,35 @@ public class Game {
         }
     }
 
+    public void playCard(String userId, Integer cardIndex) {
+        if (this.status != GameStatus.PLAYER_TURN) {
+            throw new GameException("You are not allowed to play this card now");
+        }
+        try {
+            for (int i = 0; i < this.players.size(); i++) {
+                Player p = this.players.get(i);
+                if (p.getId().equals(userId)) {
+                    Card card = p.playCard(p.getCards().get(cardIndex));
+                    this.playedCards.put(card, i);
+                    break;
+                }
+            }
+            throw new GameException("Invalid player ID");
+        } catch (Exception e) {
+            throw new GameException("Error in playing card");
+        }
+    }
+
     public int countPlayers() {
         return this.players.size();
     }
 
     public void addPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public Player getPlayer(String username) {
+        return this.players.stream().filter(p -> p.getUsername().equals(username)).findFirst().orElse(null);
     }
 
     public GameStatus getStatus() {

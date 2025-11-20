@@ -46,7 +46,7 @@ public class Player {
     }
 
     public Integer getPoints() {
-        return points;
+        return this.points;
     }
 
     public void addPoints(Integer points) {
@@ -81,10 +81,12 @@ public class Player {
         this.cards = cards;
     }
 
-    public void playCard(Card card) {
+    public Card playCard(Card card) {
         if (this.cards.contains(card)) {
             this.cards.remove(card);
+            return card;
         }
+        return null;
     }
 
     public void removeCards() {

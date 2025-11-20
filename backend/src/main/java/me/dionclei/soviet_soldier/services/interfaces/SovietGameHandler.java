@@ -3,9 +3,12 @@ package me.dionclei.soviet_soldier.services.interfaces;
 import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.Game;
 import me.dionclei.soviet_soldier.domain.GameEvent;
+import me.dionclei.soviet_soldier.domain.enums.Card;
 import me.dionclei.soviet_soldier.dto.GameResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 public interface SovietGameHandler {
 
@@ -18,4 +21,6 @@ public interface SovietGameHandler {
     Mono<Void> startGameLoop(String gameId, Game game);
     Mono<Void> stopGameLoop(String gameId);
     Mono<Void> startGame(String gameId, String username);
+    Mono<Void> playCard(String gameId, String userId, Integer cardIndex);
+    Mono<List<Card>> getCards(String gameId, String username);
 }

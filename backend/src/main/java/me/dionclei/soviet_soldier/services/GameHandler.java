@@ -4,6 +4,7 @@ import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.Game;
 import me.dionclei.soviet_soldier.domain.GameEvent;
 import me.dionclei.soviet_soldier.domain.Player;
+import me.dionclei.soviet_soldier.domain.enums.Card;
 import me.dionclei.soviet_soldier.dto.GameResponse;
 import me.dionclei.soviet_soldier.enums.GameStatus;
 import me.dionclei.soviet_soldier.exceptions.GameException;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -146,6 +148,27 @@ public class GameHandler implements SovietGameHandler {
         gameSinks.remove(gameId);
         games.remove(gameId);
         return Mono.empty();
+    }
+
+    public Mono<Void> playCard(String gameId, String userId, Integer cardIndex) {
+        Game game = games.get(gameId);
+        if (game == null || !game.isPlaying(userId)) {
+            Mono.error(new GameException("Invalid request"));
+        }
+
+        game.playCard(userId, cardIndex);
+        return Mono.empty();
+    }
+
+    @Override
+    public Mono<List<Card>> getCards(String gameId, String username) {
+        Game game = games.get(gameId);
+        if (game == null || !game.isPlaying(username)) {
+            return Mono.error(new GameException("Invalid request"));
+        }
+
+        Player player = game.getPlayer(username);
+        return Mono.just(player.getCards());
     }
 
     @Override
