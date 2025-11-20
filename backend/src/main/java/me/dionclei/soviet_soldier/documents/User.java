@@ -25,10 +25,10 @@ public class User implements UserDetails {
     public User() { }
 
     public User(String id, String username, String password, String nickname) {
-        this(id, username, password, nickname, UserRole.USER);
+        this(id, username, nickname, password, UserRole.USER);
     }
 
-    public User(String id, String username, String password, String nickname, UserRole userRole) {
+    public User(String id, String username, String nickname, String password, UserRole userRole) {
         this.id = id;
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);

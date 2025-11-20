@@ -8,16 +8,19 @@ import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.exceptions.TokenException;
 import me.dionclei.soviet_soldier.services.interfaces.TokenService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
 
+@Service
 public class TokenServiceHMAC implements TokenService {
 
-    @Value("${jwt.secret}")
-    private String key;
+    private final Algorithm algorithm;
 
-    private final Algorithm algorithm = Algorithm.HMAC256(key);
+    public TokenServiceHMAC(@Value("${jwt.secret}") String key) {
+        this.algorithm = Algorithm.HMAC256(key);
+    }
 
     @Override
     public boolean isValid(String token) {
