@@ -1,5 +1,6 @@
 package me.dionclei.soviet_soldier.domain;
 
+import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.enums.Card;
 
 import java.util.ArrayList;
@@ -20,6 +21,10 @@ public class Player {
         this.username = username;
         this.id = id;
         this.name = name;
+    }
+
+    public Player(User user) {
+        this(user.getId(), user.getNickname(), user.getUsername());
     }
 
     public String getUsername() {

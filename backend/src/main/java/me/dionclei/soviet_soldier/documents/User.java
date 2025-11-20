@@ -64,6 +64,10 @@ public class User implements UserDetails {
         return this.password;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);;
     }

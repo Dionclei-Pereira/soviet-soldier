@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Game {
 
+    private String gameId;
     private GameStatus status;
     private List<Player> players = new ArrayList<>();
     private User owner;
@@ -18,7 +19,8 @@ public class Game {
     private List<Card> cards = new ArrayList<>();
     private Map<Card, Integer> playedCards = new HashMap<>();
 
-    public Game(User owner) {
+    public Game(User owner, String gameId) {
+        this.gameId = gameId;
         this.owner = owner;
         this.round = 3;
         this.time = 15;
@@ -147,8 +149,8 @@ public class Game {
         this.players.add(player);
     }
 
-    public void removePlayer(Player player) {
-        this.players.remove(player);
+    public void removePlayer(String id) {
+        this.players.removeIf(p -> p.getId().equals(id));
     }
 
     public boolean isPlaying(String username) {
@@ -158,5 +160,9 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public String getGameId() {
+        return this.gameId;
     }
 }
