@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> create(RegisterRequest request) {
-        System.out.println(request.toString());
         User user = new User(UUID.randomUUID().toString(), request.username(), request.password(), request.nickname());
 
         return this.userRepository.save(user);
