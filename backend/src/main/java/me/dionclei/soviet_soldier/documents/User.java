@@ -1,20 +1,42 @@
 package me.dionclei.soviet_soldier.documents;
 
+import me.dionclei.soviet_soldier.enums.UserRole;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Collection;
+import java.util.List;
 
 @Document
-public class User {
+public class User implements UserDetails {
 
     private  String username;
     private String password;
     private String nickname;
+    private UserRole userRole;
 
     public User() { }
 
     public User(String username, String password, String nickname) {
+        this(username, password, nickname, UserRole.USER);
+    }
+
+    public User(String username, String password, String nickname, UserRole userRole) {
         this.username = username;
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.nickname = nickname;
+        this.userRole = userRole;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public String getUsername() {
@@ -38,6 +60,12 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.userRole == UserRole.USER) return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
     }
 }
