@@ -20,6 +20,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchange ->
                         exchange
                                 .pathMatchers(HttpMethod.GET, "/auth/ping").authenticated()
+                                .pathMatchers("/game/**").authenticated()
                                 .anyExchange().permitAll())
                 .addFilterBefore(filter, SecurityWebFiltersOrder.AUTHORIZATION)
                 .build();

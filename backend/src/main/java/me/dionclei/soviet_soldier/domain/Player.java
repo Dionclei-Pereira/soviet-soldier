@@ -2,6 +2,7 @@ package me.dionclei.soviet_soldier.domain;
 
 import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.enums.Card;
+import me.dionclei.soviet_soldier.dto.PlayerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,15 @@ public class Player {
 
     public Player(User user) {
         this(user.getId(), user.getNickname(), user.getUsername());
+    }
+
+    public PlayerResponse toDTO() {
+        return new PlayerResponse(
+                this.id,
+                this.name,
+                this.points,
+                this.cards.size()
+        );
     }
 
     public String getUsername() {

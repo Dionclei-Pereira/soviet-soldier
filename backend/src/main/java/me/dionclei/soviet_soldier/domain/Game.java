@@ -3,6 +3,7 @@ package me.dionclei.soviet_soldier.domain;
 import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.enums.Card;
 import me.dionclei.soviet_soldier.domain.enums.GameEventType;
+import me.dionclei.soviet_soldier.dto.GameResponse;
 import me.dionclei.soviet_soldier.enums.GameStatus;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public class Game {
     private String gameId;
     private GameStatus status;
     private List<Player> players = new ArrayList<>();
-    private User owner;
+    private String owner;
     private Integer round;
     private Integer time;
     private Boolean isTruco;
@@ -20,7 +21,7 @@ public class Game {
     private List<Card> cards = new ArrayList<>();
     private Map<Card, Integer> playedCards = new HashMap<>();
 
-    public Game(User owner, String gameId) {
+    public Game(String owner, String gameId) {
         this.gameId = gameId;
         this.owner = owner;
         this.round = 3;
@@ -30,7 +31,21 @@ public class Game {
         this.status = GameStatus.WAITING;
     }
 
+    public GameResponse toDTO() {
+        return new GameResponse(
+                this.gameId,
+                this.players.stream().map(Player::toDTO).toList(),
+                this.owner,
+                this.round,
+                this.isTruco,
+                this.currentPlayerIndex,
+                this.playedCards,
+                this.status
+        );
+    }
+
     public GameEvent update() {
+        System.out.println("Updating game");
         switch (this.status) {
             case ROUND_START:
                 return handleRoundStart();
@@ -149,8 +164,16 @@ public class Game {
         }
     }
 
+    public int countPlayers() {
+        return this.players.size();
+    }
+
     public void addPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public GameStatus getStatus() {
+        return this.status;
     }
 
     public void removePlayer(String id) {
@@ -166,7 +189,15 @@ public class Game {
         return false;
     }
 
+    public void start() {
+        if (this.status == GameStatus.WAITING) this.status = GameStatus.ROUND_START;
+    }
+
     public String getGameId() {
         return this.gameId;
+    }
+
+    public String getOwner() {
+        return this.owner;
     }
 }

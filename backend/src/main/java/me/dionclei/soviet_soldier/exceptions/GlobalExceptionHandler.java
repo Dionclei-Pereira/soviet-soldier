@@ -36,4 +36,12 @@ public class GlobalExceptionHandler {
         StandardException ex = new StandardException(Instant.now(), status.value(), message, request.getRequest().getURI().toString());
         return Mono.just(ResponseEntity.status(status).body(ex));
     }
+
+    @ExceptionHandler(GameException.class)
+    public Mono<ResponseEntity<StandardException>> handleGameException(GameException e, ServerWebExchange request) {
+        var status = HttpStatus.BAD_REQUEST;
+        var message = e.getMessage();
+        StandardException ex = new StandardException(Instant.now(), status.value(), message, request.getRequest().getURI().toString());
+        return Mono.just(ResponseEntity.status(status).body(ex));
+    }
 }
