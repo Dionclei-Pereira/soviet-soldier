@@ -1,5 +1,6 @@
 package me.dionclei.soviet_soldier.controllers;
 
+import jakarta.validation.Valid;
 import me.dionclei.soviet_soldier.dto.LoginRequest;
 import me.dionclei.soviet_soldier.dto.RegisterRequest;
 import me.dionclei.soviet_soldier.dto.TokenResponse;
@@ -19,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Mono<ResponseEntity<Void>> register(@RequestBody RegisterRequest request) {
+    public Mono<ResponseEntity<Void>> register(@RequestBody @Valid RegisterRequest request) {
         return this.authService.register(request).map(ResponseEntity::ok);
     }
 
