@@ -3,11 +3,11 @@ package me.dionclei.soviet_soldier.controllers;
 import me.dionclei.soviet_soldier.domain.GameEvent;
 import me.dionclei.soviet_soldier.services.interfaces.SovietGameHandler;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/game")
@@ -23,5 +23,4 @@ public class GameController {
     public Flux<GameEvent> streamGame(@PathVariable String gameId) {
         return gameService.getGameStream(gameId);
     }
-
 }

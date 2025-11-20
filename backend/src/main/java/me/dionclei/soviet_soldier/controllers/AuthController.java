@@ -19,6 +19,11 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @GetMapping("/ping")
+    public Mono<ResponseEntity<String>> ping() {
+        return  Mono.just(ResponseEntity.ok("pong"));
+    }
+
     @PostMapping("/register")
     public Mono<ResponseEntity<Void>> register(@RequestBody @Valid RegisterRequest request) {
         return this.authService.register(request).map(ResponseEntity::ok);
