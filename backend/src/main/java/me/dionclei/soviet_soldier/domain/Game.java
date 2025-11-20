@@ -2,6 +2,7 @@ package me.dionclei.soviet_soldier.domain;
 
 import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.enums.Card;
+import me.dionclei.soviet_soldier.domain.enums.GameEventType;
 import me.dionclei.soviet_soldier.enums.GameStatus;
 
 import java.util.*;
@@ -29,23 +30,20 @@ public class Game {
         this.status = GameStatus.WAITING;
     }
 
-    public void update() {
+    public GameEvent update() {
         switch (this.status) {
-            case WAITING:
-                break;
             case ROUND_START:
-                handleRoundStart();
-                break;
+                return handleRoundStart();
             case PLAYER_TURN:
-                handlePlayerTurn();
-                break;
+                return handlePlayerTurn();
             case ROUND_END:
-                handleRoundEnd();
-                break;
+                return handleRoundEnd();
+            default:
+                return null;
         }
     }
 
-    private void handleRoundStart() {
+    private GameEvent handleRoundStart() {
         this.cards.clear();
         this.cards = Arrays.asList(Card.values());
         Collections.shuffle(this.cards);
@@ -63,11 +61,11 @@ public class Game {
         }
 
         reorderPlayers(start);
-
         this.status = GameStatus.PLAYER_TURN;
+        return new GameEvent(GameEventType.START, null);
     }
 
-    private void handlePlayerTurn() {
+    private GameEvent handlePlayerTurn() {
         // Checking if all players have already played
         if (this.currentPlayerIndex > this.players.size() - 1) {
             this.status = GameStatus.ROUND_END;
@@ -76,12 +74,13 @@ public class Game {
         if (time <= 0) {
             this.currentPlayerIndex++;
             time = 15;
-            return;
+            return new GameEvent(GameEventType.PLAY, null);
         }
         time--;
+        return null;
     }
 
-    private void handleRoundEnd() {
+    private GameEvent handleRoundEnd() {
         var cards = this.playedCards.keySet().stream().toList();
         Collections.sort(cards, Comparator.comparingInt(Card::getPower));
         if (cards.get(0).getPower() == cards.get(1).getPower()) {
@@ -102,7 +101,12 @@ public class Game {
             }
         }
 
-        if (this.status != GameStatus.FINISHED) this.status = GameStatus.ROUND_START;
+        if (this.status != GameStatus.FINISHED) {
+            this.status = GameStatus.ROUND_START;
+            return  new GameEvent(GameEventType.END, null);
+        }
+
+        return new GameEvent(GameEventType.FINISH, null);
     }
 
     private void handlePlayersPoints() {
