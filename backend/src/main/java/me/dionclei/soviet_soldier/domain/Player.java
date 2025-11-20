@@ -34,6 +34,10 @@ public class Player {
         return points;
     }
 
+    public void addPoints(Integer points) {
+        this.points += points;
+    }
+
     public void setPoints(Integer points) {
         this.points = points;
     }

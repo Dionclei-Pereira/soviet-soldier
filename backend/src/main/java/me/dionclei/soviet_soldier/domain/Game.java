@@ -4,10 +4,7 @@ import me.dionclei.soviet_soldier.documents.User;
 import me.dionclei.soviet_soldier.domain.enums.Card;
 import me.dionclei.soviet_soldier.enums.GameStatus;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game {
 
@@ -19,6 +16,7 @@ public class Game {
     private Boolean isTruco;
     private Integer currentPlayerIndex;
     private List<Card> cards = new ArrayList<>();
+    private Map<Card, Integer> playedCards = new HashMap<>();
 
     public Game(User owner) {
         this.owner = owner;
@@ -38,6 +36,9 @@ public class Game {
                 break;
             case PLAYER_TURN:
                 handlePlayerTurn();
+                break;
+            case ROUND_END:
+                handleRoundEnd();
                 break;
         }
     }
@@ -59,12 +60,13 @@ public class Game {
             }
         }
 
-        reorderPlayers();
+        reorderPlayers(start);
 
         this.status = GameStatus.PLAYER_TURN;
     }
 
     private void handlePlayerTurn() {
+        // Checking if all players have already played
         if (this.currentPlayerIndex > this.players.size() - 1) {
             this.status = GameStatus.ROUND_END;
         }
@@ -77,8 +79,44 @@ public class Game {
         time--;
     }
 
+    private void handleRoundEnd() {
+        var cards = this.playedCards.keySet().stream().toList();
+        Collections.sort(cards, Comparator.comparingInt(Card::getPower));
+        if (cards.get(0).getPower() == cards.get(1).getPower()) {
+            this.currentPlayerIndex = this.players.size() - 1;
+        } else {
+            this.currentPlayerIndex = this.playedCards.get(cards.get(0));
+
+            // If it's Truco the player is given double the point amount
+            if (isTruco) {
+                this.players.get(currentPlayerIndex).addPoints(this.round);
+            }
+            this.players.get(currentPlayerIndex).addPoints(this.round);
+
+            this.round--;
+            if (this.round == 0) {
+                handlePlayersPoints();
+                this.round = 3;
+            }
+        }
+
+        if (this.status != GameStatus.FINISHED) this.status = GameStatus.ROUND_START;
+    }
+
+    private void handlePlayersPoints() {
+        for (Player p : this.players) {
+            if (p.getPoints() == 12) {
+                this.currentPlayerIndex = this.players.indexOf(p);
+                this.status = GameStatus.FINISHED;
+                return;
+            } else if (p.getPoints() > 12) {
+                p.setPoints(0);
+            }
+        }
+    }
+
     // Putting the current player at the beginning of the list
-    private void reorderPlayers() {
+    private void reorderPlayers(String start) {
 
         int startIndex = -1;
         for (int i = 0; i < this.players.size(); i++) {
