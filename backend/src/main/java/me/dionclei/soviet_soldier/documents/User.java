@@ -1,6 +1,7 @@
 package me.dionclei.soviet_soldier.documents;
 
 import me.dionclei.soviet_soldier.enums.UserRole;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,9 @@ import java.util.List;
 @Document
 public class User implements UserDetails {
 
+    @Id
+    private String id;
+
     private  String username;
     private String password;
     private String nickname;
@@ -20,11 +24,12 @@ public class User implements UserDetails {
 
     public User() { }
 
-    public User(String username, String password, String nickname) {
-        this(username, password, nickname, UserRole.USER);
+    public User(String id, String username, String password, String nickname) {
+        this(id, username, password, nickname, UserRole.USER);
     }
 
-    public User(String username, String password, String nickname, UserRole userRole) {
+    public User(String id, String username, String password, String nickname, UserRole userRole) {
+        this.id = id;
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
         this.nickname = nickname;
