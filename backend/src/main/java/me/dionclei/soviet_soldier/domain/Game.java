@@ -174,9 +174,11 @@ public class Game {
             for (int i = 0; i < this.players.size(); i++) {
                 Player p = this.players.get(i);
                 if (p.getId().equals(userId)) {
-                    Card card = p.playCard(p.getCards().get(cardIndex));
-                    this.playedCards.put(card, i);
-                    break;
+                    if (this.currentPlayerIndex != this.players.indexOf(p)) {
+                        Card card = p.playCard(p.getCards().get(cardIndex));
+                        this.playedCards.put(card, i);
+                        return;
+                    } else throw new GameException("You are not allowed to play this card now");
                 }
             }
             throw new GameException("Invalid player ID");
