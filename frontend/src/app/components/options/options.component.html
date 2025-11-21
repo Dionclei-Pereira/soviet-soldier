@@ -1,0 +1,13 @@
+<div class="lang-selector" (click)="toggle()">
+  <img [src]="currentFlag"/>
+    @if (open) {
+      <ul>
+        <li (click)="changeLang('en')">
+          <img src="../../../assets/icons/flag-en.svg"> English
+        </li>
+        <li (click)="changeLang('pt')">
+          <img src="../../../assets/icons/flag-pt.svg"> Português
+        </li>
+      </ul>
+    }
+</div>

@@ -1,0 +1,4 @@
+SVG Icon by Decathlon
+Source: SVG Repo
+License: Apache License 2.0
+Author website: https://www.decathlon.com

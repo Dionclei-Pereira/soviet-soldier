@@ -1,0 +1,9 @@
+{
+  "USERNAME": "Usuário",
+  "PASSWORD": "Senha",
+  "DISPLAY_NAME": "Nome Visível",
+  "USERNAME_PLACEHOLDER": "utilizado para fazer o login",
+  "PASSWORD_PLACEHOLDER": "meio óbvio, não?",
+  "DISPLAY_NAME_PLACEHOLDER": "nome exposto para stalkers...",
+  "REGISTER": "Registrar"
+}

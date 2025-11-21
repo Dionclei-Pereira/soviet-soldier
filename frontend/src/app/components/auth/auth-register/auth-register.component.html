@@ -1,1 +1,22 @@
-<p>auth-register.component works!</p>
+<div class="card w-50 mt-5 mx-auto">
+  <form ngForm #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <div class="text-center mb-5 mt-4">
+      <h1>{{ 'REGISTER' | translate | uppercase }}</h1>
+    </div>
+    <div class="text-center">
+      <label for="username">{{ 'USERNAME' | translate }}</label> <br>
+      <input class="w-50 ps-1" ngModel [placeholder]="'USERNAME_PLACEHOLDER' | translate" id="username" name="username" required>
+    </div>
+    <div class="text-center mt-2">
+      <label for="password">{{ 'PASSWORD' | translate }}</label> <br>
+      <input class="w-50 ps-1" ngModel [placeholder]="'PASSWORD_PLACEHOLDER' | translate" id="password" name="password" required>
+    </div>
+    <div class="text-center mt-2">
+      <label for="displayname">{{ 'DISPLAY_NAME' | translate }}</label> <br>
+      <input class="w-50 ps-1" ngModel [placeholder]="'DISPLAY_NAME_PLACEHOLDER' | translate" id="displayname" name="displayname" required>
+    </div>
+    <div class="mt-5 d-flex justify-content-center mb-5">
+      <button class="btn btn-dark w-50">{{ 'REGISTER' | translate }}</button>
+    </div>
+  </form>
+</div>
