@@ -46,4 +46,10 @@ public class AuthServiceImpl implements AuthService {
         return user.flatMap(u -> Mono.error(new InvalidCredentialsException("Username must be unique")))
                 .switchIfEmpty(this.userService.create(request)).then();
     }
+
+    @Override
+    public Mono<Boolean> verify(String token) {
+        if (token == null) return Mono.just(false);
+        return Mono.just(Boolean.valueOf(tokenService.validateToken(token)));
+    }
 }

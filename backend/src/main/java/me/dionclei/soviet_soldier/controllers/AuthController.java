@@ -5,8 +5,10 @@ import me.dionclei.soviet_soldier.dto.LoginRequest;
 import me.dionclei.soviet_soldier.dto.RegisterRequest;
 import me.dionclei.soviet_soldier.dto.TokenResponse;
 import me.dionclei.soviet_soldier.services.interfaces.AuthService;
+import me.dionclei.soviet_soldier.utils.TokenParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -34,4 +36,9 @@ public class AuthController {
         return this.authService.login(request).map(ResponseEntity::ok);
     }
 
+    @GetMapping("/verify")
+    public Mono<ResponseEntity<Boolean>> verify(ServerWebExchange request) {
+        String token = TokenParser.parseToken(request.getRequest().getHeaders().getFirst("Authorization"));
+        return this.authService.verify(token).map(ResponseEntity::ok);
+    }
 }

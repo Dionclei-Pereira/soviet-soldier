@@ -2,6 +2,7 @@ package me.dionclei.soviet_soldier.configs;
 
 import me.dionclei.soviet_soldier.services.interfaces.TokenService;
 import me.dionclei.soviet_soldier.services.interfaces.UserService;
+import me.dionclei.soviet_soldier.utils.TokenParser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +26,7 @@ public class SecurityFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        String token = parseToken(exchange.getRequest().getHeaders().getFirst("Authorization"));
+        String token = TokenParser.parseToken(exchange.getRequest().getHeaders().getFirst("Authorization"));
         if (token != null) {
             try {
                 String subject = this.tokenService.validateToken(token);
@@ -41,12 +42,5 @@ public class SecurityFilter implements WebFilter {
         }
 
         return chain.filter(exchange);
-    }
-
-    private String parseToken(String token) {
-        if (token == null) {
-            return null;
-        }
-        return token.substring(7);
     }
 }
