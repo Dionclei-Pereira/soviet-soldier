@@ -27,7 +27,7 @@
       <app-form-errors name="DISPLAY_NAME" [model]="nickname"></app-form-errors>
     </div>
     <div class="mt-5 d-flex justify-content-center mb-5">
-      <button class="btn btn-dark w-50">{{ 'REGISTER' | translate }} </button>
+      <button [disabled]="authForm.invalid" class="btn btn-dark w-50">{{ 'REGISTER' | translate }} </button>
     </div>
   </form>
 

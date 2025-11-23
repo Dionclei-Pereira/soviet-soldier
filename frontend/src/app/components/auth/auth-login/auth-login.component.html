@@ -1,1 +1,23 @@
-<p>auth-login.component works!</p>
+<div class="card w-50 mt-5 mx-auto">
+  <form ngForm #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <div class="text-center mb-5 mt-4">
+      <h1>{{ 'LOGIN' | translate | uppercase }}</h1>
+    </div>
+    <div class="text-center">
+      <label for="username">{{ 'USERNAME' | translate }}</label> <br>
+      <input class="w-50 ps-1" ngModel id="username" name="username">
+    </div>
+    <div class="text-center mt-2">
+      <label for="password">{{ 'PASSWORD' | translate }}</label> <br>
+      <input class="w-50 ps-1" ngModel id="password" name="password">
+    </div>
+    @if (err) {
+      <p class="text-danger text-center mt-5 p-0">- {{ 'INVALID_LOGIN' | translate }}</p>
+    }
+    <div class="mt-5 d-flex justify-content-center flex-column mb-5">
+      <button class="btn btn-dark w-50 mx-auto">{{ 'LOGIN' | translate }}</button>
+      <p class="text-center text-success pointer mt-2" (click)="goToRegister()">{{ 'GOTO_LOGIN' | translate }}</p>
+    </div>
+  </form>
+
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-index',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './index.component.scss',
 })
 export class IndexComponent {
+    token: string | null = null;
 
+    constructor(authService: AuthService) {
+      this.token = authService.getToken();
+    }
 }

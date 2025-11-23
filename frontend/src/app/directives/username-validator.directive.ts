@@ -27,7 +27,7 @@ export class UsernameValidatorDirective implements AsyncValidator {
 
           else return { invalidUsername: true };
         })
-      )
+      );
   }
 
 }

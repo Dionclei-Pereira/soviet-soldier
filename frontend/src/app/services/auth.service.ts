@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   login(credentials: ILoginRequest): Observable<ILoginResponse> {
-    return this.http.post<ILoginResponse>(environment.apiUrl, credentials)
+    return this.http.post<ILoginResponse>(environment.apiUrl + 'auth/login', credentials)
       .pipe(
         tap(response => {
           this.token = response.token;
@@ -41,7 +41,11 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     const token = this.getToken();
     if (!token) return of(false);
-    return this.http.get<boolean>(environment.apiUrl + 'auth/verify');
+    return this.http.get<boolean>(environment.apiUrl + 'auth/verify', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 
   isUsernameAvailable(username: string): Observable<boolean> {
