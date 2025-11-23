@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Mono<Boolean> verify(String token) {
         if (token == null) return Mono.just(false);
-        return Mono.just(Boolean.valueOf(tokenService.validateToken(token)));
+        return Mono.just(Boolean.valueOf(tokenService.isValid(token)));
     }
 
     @Override
