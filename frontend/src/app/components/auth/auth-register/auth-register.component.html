@@ -5,18 +5,30 @@
     </div>
     <div class="text-center">
       <label for="username">{{ 'USERNAME' | translate }}</label> <br>
-      <input class="w-50 ps-1" ngModel [placeholder]="'USERNAME_PLACEHOLDER' | translate" id="username" name="username" required>
+      <input class="w-50 ps-1" ngModel [placeholder]="'USERNAME_PLACEHOLDER' | translate"
+             id="username" name="username" required minlength="4" maxlength="16" appUsernameValidatorDirective
+             #username="ngModel" [ngModelOptions]="{ updateOn: 'blur' }">
     </div>
     <div class="text-center mt-2">
       <label for="password">{{ 'PASSWORD' | translate }}</label> <br>
-      <input class="w-50 ps-1" ngModel [placeholder]="'PASSWORD_PLACEHOLDER' | translate" id="password" name="password" required>
+      <input class="w-50 ps-1" ngModel [placeholder]="'PASSWORD_PLACEHOLDER' | translate"
+             id="password" name="password" required minlength="6" maxlength="16"
+             #password="ngModel" [ngModelOptions]="{ updateOn: 'blur' }">
     </div>
     <div class="text-center mt-2">
       <label for="displayname">{{ 'DISPLAY_NAME' | translate }}</label> <br>
-      <input class="w-50 ps-1" ngModel [placeholder]="'DISPLAY_NAME_PLACEHOLDER' | translate" id="displayname" name="displayname" required>
+      <input class="w-50 ps-1" ngModel [placeholder]="'DISPLAY_NAME_PLACEHOLDER' | translate"
+             id="displayname" name="displayname" required minlength="4" maxlength="16"
+             #nickname="ngModel" [ngModelOptions]="{ updateOn: 'blur' }">
+    </div>
+    <div class="mt-4">
+      <app-form-errors name="USERNAME" [model]="username"></app-form-errors>
+      <app-form-errors name="PASSWORD" [model]="password"></app-form-errors>
+      <app-form-errors name="DISPLAY_NAME" [model]="nickname"></app-form-errors>
     </div>
     <div class="mt-5 d-flex justify-content-center mb-5">
-      <button class="btn btn-dark w-50">{{ 'REGISTER' | translate }}</button>
+      <button class="btn btn-dark w-50">{{ 'REGISTER' | translate }} </button>
     </div>
   </form>
+
 </div>

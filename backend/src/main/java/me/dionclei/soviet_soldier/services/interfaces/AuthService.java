@@ -9,4 +9,5 @@ public interface AuthService {
     Mono<TokenResponse> login(LoginRequest request);
     Mono<Void> register(RegisterRequest request);
     Mono<Boolean> verify(String token);
+    Mono<Boolean> isUsernameAvailable(String username);
 }

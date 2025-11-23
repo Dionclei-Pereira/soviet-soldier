@@ -1,9 +1,17 @@
 {
   "USERNAME": "Usuário",
   "PASSWORD": "Senha",
-  "DISPLAY_NAME": "Nome Visível",
+  "DISPLAY_NAME": "Nome de exibição",
   "USERNAME_PLACEHOLDER": "utilizado para fazer o login",
   "PASSWORD_PLACEHOLDER": "meio óbvio, não?",
   "DISPLAY_NAME_PLACEHOLDER": "nome exposto para stalkers...",
-  "REGISTER": "Registrar"
+  "REGISTER": "Registrar",
+  "USERNAME_LENGTH_ERROR": "O nome de usuário deve ter entre 4 e 16 caracteres",
+  "USERNAME_REQUIRED_ERROR": "Nome de usuário é obrigatório",
+  "USERNAME_CUSTOM_ERROR": "O nome de usuário deve ser único",
+  "PASSWORD_LENGTH_ERROR": "A senha deve ter entre 6 e 16 caracteres",
+  "PASSWORD_REQUIRED_ERROR": "Senha é obrigatória",
+  "DISPLAY_NAME_LENGTH_ERROR": "O nome de exibição deve ter entre 4 e 16 caracteres",
+  "DISPLAY_NAME_REQUIRED_ERROR": "Nome de exibição é obrigatório"
+
 }

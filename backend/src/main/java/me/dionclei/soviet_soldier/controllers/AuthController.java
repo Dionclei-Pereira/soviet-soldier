@@ -41,4 +41,9 @@ public class AuthController {
         String token = TokenParser.parseToken(request.getRequest().getHeaders().getFirst("Authorization"));
         return this.authService.verify(token).map(ResponseEntity::ok);
     }
+
+    @GetMapping("/username-available/{username}")
+    public Mono<ResponseEntity<Boolean>> usernameAvailable(@PathVariable String username) {
+        return this.authService.isUsernameAvailable(username).map(ResponseEntity::ok);
+    }
 }

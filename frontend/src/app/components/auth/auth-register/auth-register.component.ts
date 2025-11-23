@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, } from '@angular/core';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-register',
@@ -12,4 +12,5 @@ export class AuthRegisterComponent {
   onSubmit(form: NgForm) {
 
   }
+
 }

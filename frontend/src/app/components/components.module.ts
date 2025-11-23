@@ -1,18 +1,23 @@
-import {NgModule} from '@angular/core';
-import {CommonModule, NgOptimizedImage, UpperCasePipe} from '@angular/common';
-import {AuthLoginComponent} from './auth/auth-login/auth-login.component';
-import {AuthRegisterComponent} from './auth/auth-register/auth-register.component';
-import {FormsModule} from '@angular/forms';
-import {OptionsComponent} from './options/options.component';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
+import { NgModule } from '@angular/core';
+import { CommonModule, NgOptimizedImage, UpperCasePipe } from '@angular/common';
+import { AuthLoginComponent } from './auth/auth-login/auth-login.component';
+import { AuthRegisterComponent } from './auth/auth-register/auth-register.component';
+import { FormsModule } from '@angular/forms';
+import { OptionsComponent } from './options/options.component';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { IndexComponent } from './home/index/index.component';
+import { FormErrorsComponent } from './auth/form-errors/form-errors.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
     AuthLoginComponent,
     AuthRegisterComponent,
-    OptionsComponent
+    OptionsComponent,
+    IndexComponent,
+    FormErrorsComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +25,8 @@ import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
     TranslatePipe,
     TranslateModule.forRoot(),
     UpperCasePipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    DirectivesModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

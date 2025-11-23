@@ -43,4 +43,8 @@ export class AuthService {
     if (!token) return of(false);
     return this.http.get<boolean>(environment.apiUrl + 'auth/verify');
   }
+
+  isUsernameAvailable(username: string): Observable<boolean> {
+    return this.http.get<boolean>(environment.apiUrl + `auth/username-available/${username}`);
+  }
 }

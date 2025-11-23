@@ -52,4 +52,10 @@ public class AuthServiceImpl implements AuthService {
         if (token == null) return Mono.just(false);
         return Mono.just(Boolean.valueOf(tokenService.validateToken(token)));
     }
+
+    @Override
+    public Mono<Boolean> isUsernameAvailable(String username) {
+        return this.userService.findByUsername(username)
+                .hasElement().map(exist -> !exist);
+    }
 }

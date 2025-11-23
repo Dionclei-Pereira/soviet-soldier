@@ -1,0 +1,11 @@
+@if (model.touched && model.invalid) {
+  <p class="text-center text-danger m-0 p-0">-
+    @if (model.hasError('minlength') || model.hasError('maxlength')) {
+      {{ name + '_LENGTH_ERROR' | translate }}
+    } @else if (model.hasError('required')) {
+      {{ name + '_REQUIRED_ERROR' | translate }}
+    } @else {
+      {{ name + '_CUSTOM_ERROR' | translate }}
+    }
+  </p>
+}
