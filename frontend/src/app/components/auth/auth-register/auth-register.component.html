@@ -12,7 +12,7 @@
     <div class="text-center mt-2">
       <label for="password">{{ 'PASSWORD' | translate }}</label> <br>
       <input class="w-50 ps-1" ngModel [placeholder]="'PASSWORD_PLACEHOLDER' | translate"
-             id="password" name="password" required minlength="6" maxlength="16"
+             id="password" name="password" type="password" required minlength="6" maxlength="16"
              #password="ngModel" [ngModelOptions]="{ updateOn: 'blur' }">
     </div>
     <div class="text-center mt-2">
