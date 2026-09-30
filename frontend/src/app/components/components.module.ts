@@ -5,7 +5,6 @@ import { AuthRegisterComponent } from './auth/auth-register/auth-register.compon
 import { FormsModule } from '@angular/forms';
 import { OptionsComponent } from './options/options.component';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IndexComponent } from './home/index/index.component';
 import { FormErrorsComponent } from './auth/form-errors/form-errors.component';
@@ -29,7 +28,6 @@ import { DirectivesModule } from '../directives/directives.module';
     DirectivesModule
   ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
     provideTranslateHttpLoader({
       prefix: './assets/i18n/',
       suffix: '.json'

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthLoginComponent } from './components/auth/auth-login/auth-login.component';
 import { AuthRegisterComponent } from './components/auth/auth-register/auth-register.component';
 import { IndexComponent } from './components/home/index/index.component';
-import { AuthGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth-guard';
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'index', component: IndexComponent },
       { path: '', redirectTo: 'index', pathMatch: 'full' },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [authGuard]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
