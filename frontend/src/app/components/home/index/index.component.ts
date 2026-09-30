@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -7,10 +7,12 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss',
 })
-export class IndexComponent {
-    token: string | null = null;
+export class IndexComponent implements OnInit {
+  token = signal<string | null>(null);
 
-    constructor(authService: AuthService) {
-      this.token = authService.getToken();
-    }
+  private readonly authService = inject(AuthService);
+
+  ngOnInit(): void {
+    this.token.set(this.authService.getToken());
+  }
 }

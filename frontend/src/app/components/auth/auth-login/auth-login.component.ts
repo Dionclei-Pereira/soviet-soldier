@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
@@ -12,9 +12,10 @@ import { take } from 'rxjs';
 })
 export class AuthLoginComponent {
 
-  err: boolean = false;
+  err = signal<boolean>(false);
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) { }
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   goToRegister(): void {
     this.router.navigate(['/auth/register']);
@@ -27,9 +28,8 @@ export class AuthLoginComponent {
         next: () => {
           this.router.navigate(['/home']);
         },
-        error: (ex) => {
-          console.log(ex)
-          this.err = true;
+        error: () => {
+          this.err.set(true);
         }
       });
   }

@@ -11,7 +11,7 @@
       <label for="password">{{ 'PASSWORD' | translate }}</label> <br>
       <input class="w-50 ps-1" ngModel id="password" type="password" name="password">
     </div>
-    @if (err) {
+    @if (err()) {
       <p class="text-danger text-center mt-5 p-0">- {{ 'INVALID_LOGIN' | translate }}</p>
     }
     <div class="mt-5 d-flex justify-content-center flex-column mb-5">

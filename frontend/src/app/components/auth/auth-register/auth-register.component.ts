@@ -1,5 +1,5 @@
-import { Component, } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { take } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class AuthRegisterComponent {
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {
-  }
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   onSubmit(form: NgForm) {
     this.authService.register(form.value).pipe(
@@ -22,7 +22,7 @@ export class AuthRegisterComponent {
       next: () => {
         this.router.navigate(['/auth/login']);
       },
-      error: (err) => {
+      error: () => {
         console.log('Something went wrong');
       }
     });

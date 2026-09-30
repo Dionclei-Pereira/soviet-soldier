@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,7 @@ import { NgModel } from '@angular/forms';
   styleUrl: './form-errors.component.scss',
 })
 export class FormErrorsComponent {
-  @Input({ required: true })
-  model!: NgModel;
+  model = input.required<NgModel>();
 
-  @Input({ required: true })
-  name!: string;
-
+  name = input.required<string>();
 }

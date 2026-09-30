@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
+import { AfterViewInit, Component, inject, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-options',
@@ -7,22 +7,23 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './options.component.html',
   styleUrl: './options.component.scss',
 })
-export class OptionsComponent {
+export class OptionsComponent implements AfterViewInit {
+  currentFlag = signal<string>('');
+  open = signal<boolean>(false);
 
-  currentFlag: string = '';
-  open: boolean = false;
+  private readonly translateService = inject(TranslateService);
 
-  constructor(private readonly translateService: TranslateService) {
-    this.changeLang(this.getLang())
+  ngAfterViewInit(): void {
+    this.changeLang(this.getLang());
   }
 
   toggle(): void {
-    this.open = !this.open;
+    this.open.update((val) => !val);
   }
 
   changeLang(language: string): void {
     this.translateService.use(language);
-    this.currentFlag = `assets/icons/flag-${language}.svg`
+    this.currentFlag.set(`assets/icons/flag-${language}.svg`);
     localStorage.setItem('lang', language);
   }
 
@@ -31,5 +32,4 @@ export class OptionsComponent {
     if (lang) return lang;
     return 'en';
   }
-
 }
